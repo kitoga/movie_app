@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:movie_app/model/movie_model.dart';
-import 'package:movie_app/model/project_model.dart';
-import 'package:movie_app/repository/repo.dart';
+// import 'package:movie_app/model/project_model.dart';
+// import 'package:movie_app/repository/repo.dart';
 import 'package:http/http.dart' as http;
 
-class MovieRepository implements Repository {
-  @override
+class MovieRepository {
+  // @override
   Future<MovieModel> getMovie() async {
     String url = "https://yts.mx/api/v2/list_movies.json";
 
@@ -24,7 +24,8 @@ class MovieRepository implements Repository {
         return error;
       }
     } catch (e) {
-      throw (e.toString());
+      print(e);
+      return MovieModel.fromJson({'00': ''});
     }
   }
 
