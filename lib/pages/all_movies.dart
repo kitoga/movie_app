@@ -5,7 +5,7 @@ import 'package:movie_app/repository/movie_repo.dart';
 import '../model/movie_model.dart';
 
 class AllMovies extends StatefulWidget {
-  AllMovies({Key? key}) : super(key: key);
+  AllMovies({Key key}) : super(key: key);
 
   @override
   State<AllMovies> createState() => _AllMoviesState();
@@ -14,12 +14,12 @@ class AllMovies extends StatefulWidget {
 class _AllMoviesState extends State<AllMovies> {
   @override
   Widget build(BuildContext context) {
-    var productController = MovieController(MovieRepository());
+    // var productController = MovieController(MovieRepository());
     return Scaffold(
       body: FutureBuilder<MovieModel>(
-        future: productController.fetchMovie(),
+        future: MovieRepository().getMovie(),
         builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -28,13 +28,8 @@ class _AllMoviesState extends State<AllMovies> {
           }
 
           final data = snapshot.data;
-          return ListView.builder(
-            itemCount: data?.data?.movies?.length,
-            itemBuilder: (context, index) {
-              final movie = data?.data?.movies![index];
-              return Text(movie!.language.toString());
-            },
-          );
+          print(data?.data);
+          return Center(child: Text(data.toJson().toString()));
         },
       ),
     );
